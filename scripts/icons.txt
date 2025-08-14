@@ -1,0 +1,65 @@
+Lang
+globe
+
+Login
+right-to-bracket
+
+Register
+user-plus
+
+User
+user
+
+Dashboard
+table-columns
+
+Profile
+id-badge
+
+Logout
+right-from-bracket
+
+Número actual
+newspaper
+
+Archivos
+box-archive
+
+Envíos
+file-import
+
+Avisos
+bullhorn
+
+Equipo editorial
+people-group
+
+indizaciones
+indent
+
+Acerca de 
+circle-info
+
+Ética de publicación
+person-shelter
+
+Contacto
+adress-book
+
+Estadística
+chart-line
+
+Multimedia
+photo-film
+
+proceso editorial
+chart-diagram
+
+Evaluadores
+user-check
+
+Normatividad
+bars
+
+Buscar
+fa-magnifying-glass
