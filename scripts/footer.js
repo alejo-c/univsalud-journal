@@ -1,4 +1,5 @@
 //<link rel="stylesheet" href="https://revistas.udenar.edu.co/public/journals/5/styleSheet.css?d=2025-04-10+16%3A21%3A48" type="text/css">
+//<link rel="stylesheet" href="http://files.univsalud.online/styles/stylesheet.css" type="text/css">
 
 <!-- Histats.com  START  (aync)-->
 //<script type="text/javascript">
