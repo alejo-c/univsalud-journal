@@ -358,11 +358,19 @@ p,
 
 /* End Most Viewed */
 
-.announcements,
 .issue,
 .section-dark {
   margin: 0;
   padding: 0;
+}
+
+.announcements h3 {
+  display: none;
+}
+
+.announcement-section__toc li {
+  flex: 100%;
+  max-width: 100%;
 }
 
 .issue {
