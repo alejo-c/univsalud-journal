@@ -184,6 +184,10 @@ li p {
   margin-top: 2vh !important;
 }
 
+.article__btn-group {
+  margin: 0;
+}
+
 .article__btn-group a {
   margin: 0;
   padding: .25em .6em;
@@ -364,6 +368,10 @@ p,
   padding: 0;
 }
 
+.announcements {
+  padding: 3vh 0;
+}
+
 .announcements h3 {
   display: none;
 }
@@ -371,19 +379,106 @@ p,
 .announcement-section__toc li {
   flex: 100%;
   max-width: 100%;
+  margin: 0;
 }
 
 .issue {
   padding: 0;
 }
 
-.issue>.container:first-of-type {
+.issue .container {
   min-height: 0;
 }
 
 .issue__header {
   margin-bottom: 1em;
 }
+
+/* .issue-section__toc { */
+/*   display: grid; */
+/*   grid-template-columns: repeat(2, 1fr); */
+/*   grid-template-rows: repeat(4, auto); */
+/*   grid-auto-flow: column; */
+/*   gap: 1rem 4rem; */
+/*   margin: 1rem 0; */
+/* } */
+/**/
+/* .issue-section__toc-item, */
+/* .issue-section__toc-item .article, */
+/* .issue-section__toc-item .article > .row, */
+/* .issue-section__toc-item .article > .row > div { */
+/*   display: contents; */
+/* } */
+
+  /* .issue-section__toc { */
+  /*   display: grid; */
+  /*   grid-template-columns: 1fr; */
+  /*   gap: 1rem; */
+  /*   margin: 1rem 0; */
+  /* } */
+  /**/
+  /* @media (min-width: 768px) { */
+  /*   .issue-section__toc { */
+  /*     grid-template-columns: repeat(2, 1fr); */
+  /*     gap: 0.25rem 4rem; */
+  /*   } */
+  /**/
+  /*   .issue-section__toc-item { */
+  /*     display: grid; */
+  /*     grid-row: span 4; */
+  /*     grid-template-rows: subgrid; */
+  /*   } */
+  /**/
+  /*   .issue-section__toc-item .article, */
+  /*   .issue-section__toc-item .article > .row, */
+  /*   .issue-section__toc-item .article > .row > div { */
+  /*     display: contents; */
+  /*   } */
+  /* } */
+  /**/
+  /* .issue-section__toc-item .row { */
+  /*   --bs-gutter-x: 0; */
+  /*   margin: 0; */
+  /* } */
+  /**/
+  /* .issue-section__toc-item [class*="col-"] { */
+  /*   padding: 0; */
+  /*   margin-left: 0; */
+  /*   width: 100%; */
+  /*   max-width: 100%; */
+  /*   flex: none; */
+  /* } */
+
+  .issue-section__toc {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  @media (min-width: 768px) {
+    .issue-section__toc {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem 4rem;
+    }
+  }
+
+  .issue-section__toc-item .row {
+    --bs-gutter-x: 0;
+    margin: 0;
+  }
+
+  .issue-section__toc-item [class*="col-"] {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    flex: none;
+  }
+
+  .issue-section__toc-item [class*="offset-"] {
+    margin-left: 0;
+  }
 
 .issue-desc {
   padding: 1em 0 2em 0;
@@ -398,7 +493,9 @@ ul.issue-desc__btn-group li {
 }
 
 .issue-section {
-  padding: 1em 0;
+  padding: 0;
+  margin: 0;
+  padding-top: 2em 0;
 }
 
 .issue-section__header,
@@ -471,6 +568,12 @@ dl dt:nth-of-type(2) {
   border-bottom: 1px solid var(--color3);
 }
 
+#signatures th,
+#signatures td {
+  border: 1px solid var(--color3);
+  text-align: left;
+}
+
 .pkp_block {
   margin-bottom: 24px;
   padding: 0 15px;
@@ -521,7 +624,6 @@ dl dt:nth-of-type(2) {
 }
 
 @media all {
-
   :is(.main-footer, .journal-description) [class^="col-"]:not(.sidebar_wrapper [class^="col-"]),
   :is(.main-footer, .journal-description) [class*=" col-"]:not(.sidebar_wrapper [class*=" col-"]) {
     flex: 0 0 100% !important;
@@ -535,6 +637,10 @@ dl dt:nth-of-type(2) {
   .article .col-md-12.offset-md-4,
   .search_results .col-md-8.offset-md-4 {
     margin-left: 2em;
+  }
+
+  .article .col-md-8.offset-md-4 {
+    margin-left: 0;
   }
 
   .issue-desc .col-md-6 {
@@ -802,13 +908,15 @@ tbody td {
 
 thead tr:first-child,
 .border-top-dark {
-  border-top: 1.02px solid #333 !important;
+  border-top: 1px solid;
 }
 
 thead tr:last-child,
 tbody tr:last-child,
-border-bottom-dark {
-  border-bottom: 1.02px solid #333 !important;
+border-bottom-dark,
+th[rowspan],
+tr:nth-last-child(2) > td[rowspan] {
+  border-bottom: 1px solid;
 }
 
 .table-margin {
@@ -825,7 +933,7 @@ caption {
   word-spacing: 0;
 }
 
-.ecuation {
+.ecuation, .equation {
   margin-bottom: 1.5em;
   text-align: center;
 }
@@ -877,6 +985,7 @@ figure figcaption {
 figure img {
   max-width: 100%;
 }
+
 
 /* ---- End Styles HTML Galleys ---- */
 

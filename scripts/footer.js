@@ -1,34 +1,7 @@
-//<link rel="stylesheet" href="https://revistas.udenar.edu.co/public/journals/5/styleSheet.css?d=2025-04-10+16%3A21%3A48" type="text/css">
-//<link rel="stylesheet" href="http://files.univsalud.online/styles/stylesheet.css" type="text/css">
-
-<!-- Histats.com  START  (aync)-->
-//<script type="text/javascript">
-var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,1906522,4,237,241,20,00011111']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-//<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?1906522&101" alt="contadores web" border="0"></a></noscript>
-<!-- Histats.com END -->
-
-<!-- Global site tag (gtag.js) - Google Analytics START -->
-//<script async src="https://www.googletagmanager.com/gtag/js?id=G-WMSV7RJ594"></script>
-//<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WMSV7RJ594');
-//</script>
-<!-- Global site tag (gtag.js) - Google Analytics END -->
-
-// CUSTOM ACTIONS AFTER PAGE LOAD 14/08/2025
-//<script src="https://kit.fontawesome.com/d2a7dc6d91.js" crossorigin="anonymous"></script>
-
-//<script>
+<link rel="stylesheet" href="https://revistas.udenar.edu.co/public/journals/5/styleSheet.css?d=2025-04-10+16%3A21%3A48" type="text/css">
+<link rel="stylesheet" href="http://files.univsalud.online/styles/stylesheet.css" type="text/css">
+<script>
+// CUSTOM ACTIONS AFTER PAGE LOAD 15/12/2025
 const get_localized_option = (es_option, en_option, pt_option) => ({
   'es-ES': es_option,
   'en-US': en_option,
@@ -47,11 +20,15 @@ const select_all = query => document.querySelectorAll(query)
 
 const add_main_bar_icons = () => {
   insert_icon(get_by_id('languageToggleMenulanguageNav'), 'globe')
-  insert_icon(select('.pkp_navigation_user #dropdownMenuLink'), 'user')
   insert_icon(select('.nmi_type_user_register a'), 'user-plus')
   insert_icon(select('.nmi_type_user_login a'), 'right-to-bracket')
 
-  const user_list = select_all('.pkp_navigation_user .dropdown-menu .nav-link')
+  const pkp_nav = select('.pkp_navigation_user')
+  if (!pkp_nav) return
+
+  insert_icon(pkp_nav.querySelector('#dropdownMenuLink'), 'user')
+
+  const user_list = pkp_nav.querySelectorAll('.dropdown-menu .nav-link')
   insert_icon(user_list[0], 'table-columns')
   insert_icon(user_list[1], 'id-badge')
   insert_icon(user_list[2], 'right-from-bracket')
@@ -103,6 +80,19 @@ const create_make_submission_button = () => {
   select('.article-sidebar')?.insertAdjacentHTML('afterbegin', submission_btn)
 }
 
+const add_article_pages = () => {
+  select_all('.issue-section .article__title a').forEach(anchor => {
+    const articleId = anchor.href.match(/\/view\/(\d+)/)?.[1]
+
+    if (articleId) {
+      const span = document.createElement('span')
+      span.className = 'article__meta'
+      span.textContent = `e${articleId}`
+      anchor.closest('.article')?.querySelector('.article__title')?.insertAdjacentElement('afterend', span)
+    }
+  })
+}
+
 const show_english_article_titles = () => {
   const article_titles = new Map([
     ['7050', 'Musculoskeletal disorders in university professors who telework due to COVID-19 pandemic'],
@@ -121,6 +111,12 @@ const show_english_article_titles = () => {
     ['8569', 'Return to work, family functionality, and social support in women who experienced pregnancy after age 35 in Antioquia, Colombia'],
     ['8404', 'Evaluation of dentistry professors before and during the COVID-19 pandemic'],
     ['8601', 'Timelines associated with the neonatal jaundice care cycle and assessment of caregiver satisfaction'],
+    ['9084', 'Proposal to create a Technological Career in Forensic Medicine to optimize justice in Ecuador'],
+    ['9155', 'Relationship between physical activity levels and body fat percentage in gym users, Lima, Peru'],
+    ['9295', 'Risk perception and electronic cigarette use among nursing students at a public university in Mexico'],
+    ['9569', 'Helicobacter pylori resistome analysis in Colombia'],
+    ['9120', 'Characterization of the labor market of dietitian nutritionists in Valle del Cauca, Colombia'],
+    ['9210', 'Prevalence of zinc-rich food consumption and associated factors in children at a children\'s home in Pamplona, Colombia'],
   ])
 
   // For links to article view page
@@ -134,22 +130,35 @@ const show_english_article_titles = () => {
   // For article view page
 
   const article_id = get_meta_content('DC.Identifier')
-  if (!article_id)
-    throw new Error('Article page id not found')
-  if (!article_titles.has(article_id))
-    throw new Error('Article not in english')
+  if (!article_id) {
+    console.error('Article page id not found')
+    return
+  }
+  if (!article_titles.has(article_id)) {
+    console.error('Article not in english')
+    return
+  }
 
   const title_span = select('h1.article-page__title span')
+  if (!title_span) return
   title_span.innerText = article_titles.get(article_id)
 }
 
 const add_article_page_info = () => {
   const article_id = get_meta_content('DC.Identifier')
-  if (!article_id)
-    throw new Error('Article page id not found')
+  if (!article_id) {
+    console.error('Article page id not found')
+    return 
+  }
+  const sidebar_figure = select('.article-sidebar figure')
+  if (!sidebar_figure) {
+    console.error('Article sidebar figure not found')
+    return
+  }
+
+  let html_content = ''
 
   // Insert SDOs
-
   const sdo_list_articles = new Map([
     ['6872', [2, 3]],
     ['7343', [2]],
@@ -164,10 +173,21 @@ const add_article_page_info = () => {
     ['8601', [2]],
     ['8757', [2]],
     ['8267', [2, 3]],
+
+    ['9084', [2, 3, 4, 9, 15]],
+    ['9155', [2]],
+    ['9234', [2]],
+    ['9295', [2]],
+
+    ['9569', [2]],
+    ['9120', [7]],
+    ['9465', [2]],
+    ['8961', [2]],
+    ['9210', [1, 2]],
   ])
 
   if (sdo_list_articles.has(article_id)) {
-    const sdos = [
+    const sdos = new Map([
       ['Fin de la pobreza', 'No poverty', 'Fim da pobreza'],
       ['Hambre cero', 'Zero hunger', 'Fome zero'],
       ['Salud y bienestar', 'Good health and well-being', 'Saúde e bem-estar'],
@@ -185,9 +205,13 @@ const add_article_page_info = () => {
       ['vida de ecosistemas terrestres', 'Life on land', 'Vida terrestre'],
       ['Paz, justicia e instituciones sólidas', 'Peace, justice and strong institutions', 'Paz, justiça e instituições eficazes'],
       ['Alianzas para lograr los objetivos', 'Partnerships for the goals', 'Parcerias e meios de implementação']
-    ]
+    ])
 
-    select('.article-sidebar figure')?.insertAdjacentHTML('afterend', `<div id='sdo'>
+    const sdo_items = sdo_list_articles.get(article_id)
+      .map(i => `<li class='sdo'>${sdos.get(i)[get_localized_option(0, 1, 2)]}</li>`)
+      .join('')
+
+    html_content += `<div id='sdo'>
       <h2 class='article-side__title'>
         ${get_localized_option(
           'Objetivos de desarrollo sostenible',
@@ -195,15 +219,8 @@ const add_article_page_info = () => {
           'Objetivos de desenvolvimento sustentável'
         )}
       </h2>
-      <ul id='sdo_list'></ul>
-    </div>`)
-
-    const sdo_list = get_by_id('sdo_list')
-    sdo_list_articles.get(article_id).forEach(objective_index =>
-      sdo_list.insertAdjacentHTML('beforeend', `<li class='sdo'>
-        ${sdos[objective_index][get_localized_option(0, 1, 2)]}
-      </li>`)
-    )
+      <ul id='sdo_list'>${sdo_items}</ul>
+     </div>`
   }
 
   // Insert share buttons
@@ -220,7 +237,7 @@ const add_article_page_info = () => {
   const keywords = Array.from(select_all('meta[name="citation_keywords"]'))
     .map(meta => meta.getAttribute('content')).join(',').replace(/[\s-]/g, '')
 
-  select('.article-sidebar figure')?.insertAdjacentHTML('afterend', `<div id='sdo'>
+  html_content += `<div>
     <a id='share-twitter' class='share-btn' target='_blank' rel='noopener' title='Twitter share'
       href='https://twitter.com/intent/tweet?url=${url}&text=${message}&hashtags=${keywords}'>
       <img src='https://revistas.udenar.edu.co/public/site/images/mbeltran/twitter.png' />
@@ -237,10 +254,14 @@ const add_article_page_info = () => {
       href="https://www.linkedin.com/sharing/share-offsite/?url=${url}">
       <img src='https://revistas.udenar.edu.co/public/site/images/alejo/linkedin-logo.png' />
     </a>
-  </div>`)
+  </div>`
+
+  sidebar_figure.insertAdjacentHTML('afterend', html_content)
 }
 
-const fix_keyword_cloud_size = () => select('.block_Keywordcloud')?.classList.add('col-md-3')
+const fix_keyword_cloud_size = () => {
+  select('.block_Keywordcloud')?.classList.add('col-md-3')
+}
 
 const accordion_functionality = () => {
   select('#about-page, #submissions-page, #ethics-page')?.insertAdjacentHTML(
@@ -286,12 +307,12 @@ const accordion_functionality = () => {
 
 const anchor_section_at_reload = () => {
   const hash = window.location.hash
-  if (!hash)
-    throw new Error('Window hash not found')
+  if (!hash) return
 
-  select(`${hash} .accordion-button`).click()
+  const button = select(`${hash} .accordion-button`)
+  if (!button) return
+  button.click()
 }
-
 
 const move_special_issue_galleys_2025 = () => {
   select('.issue-desc__galleys').insertAdjacentHTML('beforeend', `
@@ -319,10 +340,26 @@ const remove_default_html_galley_stylesheet = () => {
   }
 }
 
+const disable_copy_cut = () => {
+  document.addEventListener('copy', e => {
+    if (e.target.closest('.no-copy, .content-body, .page, .page, #submissions-page')) {
+      e.preventDefault()
+    }
+  })
+
+  document.addEventListener('cut', e => {
+    if (e.target.closest('.no-copy, .content-body, .page, .page, #submissions-page')) {
+      e.preventDefault()
+    }
+  })
+}
+
 const insert_xml_galley_header = () => {
   const article_title = select('.article.lens-article .text.title').innerText
-  if (!article_title)
-    throw new Error('Page is not XML Galley')
+  if (!article_title) {
+    console.error('Page is not XML Galley')
+    return
+  }
 
   const url = window.location.href.split('/').slice(0, -1).join('/');
 
@@ -334,7 +371,7 @@ const insert_xml_galley_header = () => {
 
 // Run and Debug
 
-[add_main_bar_icons, add_navbar_icons, add_file_icons, create_make_submission_button, show_english_article_titles, add_article_page_info, fix_keyword_cloud_size, accordion_functionality, anchor_section_at_reload, move_special_issue_galleys_2025, remove_default_html_galley_stylesheet, insert_xml_galley_header].forEach(func => {
+[add_main_bar_icons, add_navbar_icons, show_english_article_titles, add_article_page_info, add_file_icons, create_make_submission_button, add_article_pages, accordion_functionality, anchor_section_at_reload, fix_keyword_cloud_size, move_special_issue_galleys_2025, remove_default_html_galley_stylesheet, disable_copy_cut, insert_xml_galley_header].forEach(func => {
   try {
     func() 
   } catch (error) {
@@ -342,4 +379,27 @@ const insert_xml_galley_header = () => {
   }
 })
 
-//</script>
+</script>
+<script src="https://kit.fontawesome.com/d2a7dc6d91.js" crossorigin="anonymous"></script>
+<!-- Histats.com  START  (aync)-->
+<script type="text/javascript">
+var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,1906522,4,237,241,20,00011111']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?1906522&101" alt="contadores web" border="0"></a></noscript>
+<!-- Histats.com END -->
+<!-- Global site tag (gtag.js) - Google Analytics START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WMSV7RJ594"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WMSV7RJ594');
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics END -->
